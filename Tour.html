@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Các tour du lịch</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 0; padding: 0; }
+    header {
+      background: #cceeff;
+      padding: 10px 20px;
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    header img {
+      height: 40px;
+    } 
+    nav {display: flex;gap: 10px;position: relative;}
+
+    nav a {
+  text-decoration: none;
+  color: black;
+  font-weight: bold;
+  padding: 8px 12px;
+  font-size: 17px;
+  display: inline-block;
+  transition: background 0.3s, transform 0.2s;
+}
+
+
+nav a.active {
+  background: #cceeff;
+  border-radius: 4px;
+  transform: scale(0.95); /* cũng sửa từ o.95 => 0.95 */
+}
+
+nav a:hover {
+  background: #ffe066;
+  border-radius: 4px;
+  transform: scale(1.05);
+}
+
+    
+    .hero { background: url('https://datviettour.com.vn/uploads/images/tin-tuc-SEO/mien-trung/Da-Nang/danh-thang/ba-na-hills.jpg') center/cover no-repeat; color: white; text-align: center; padding: 80px 20px; font-size: 36px; font-weight: bold; }
+    .section {padding: 20px;}
+    .tour-box { display: flex; margin-bottom: 20px; border-bottom: 1px solid #ccc; padding-bottom: 10px; }
+    .tour-box img { width: 150px; height: 100px; object-fit: cover; margin-right: 10px; }
+    .tour-info { flex-grow: 1; }
+    .tour-info h4 { margin: 0 0 5px; }
+    .tour-info p { margin: 2px 0; }
+    .book-btn { background: #ff4d4d; color: white; border: none; padding: 5px 10px; cursor: pointer; border-radius: 4px; }
+   
+    
+    .user-icon {
+  font-size: 20px;
+  cursor: pointer;
+  position: absolute;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+
+.account-panel {
+  display: none;
+  position: absolute;
+  top: 60px;
+  right: 40px;
+  width: 300px;
+  background: #cceeff;
+  border: 1px solid #999;
+  border-radius: 10px;
+  padding: 20px;
+  z-index: 999;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+}
+
+.account-panel h3,
+.account-panel h4 {
+  margin: 10px 0;
+  text-align: center;
+}
+
+.form-box {
+  margin-bottom: 15px;
+}
+
+.form-box input,
+.form-box textarea {
+  width: 100%;
+  padding: 8px;
+  margin: 5px 0;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+.btn-submit {
+      background-color: #ff5e5e;
+      border: none;
+      padding: 8px;
+      width: 100%;
+      color: white;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background 0.3s, transform 0.2s;
+    }
+
+ .btn-submit:hover {
+      background-color: #e14c4c;
+      transform: scale(1.02);
+    }
+
+    .success-msg {
+      color: green;
+      margin-top: 10px;
+      display: none;
+      text-align: center;
+      font-weight: bold;
+    }
+    .lienhe {
+        background: linear-gradient(to right, #c8f3fe, rgb(87, 160, 202));
+        background-color: #89e2f8;
+
+        padding: 40px;
+      }
+
+      .lienhe h2 {
+        font-size: 20px;
+        margin-bottom: 20px;
+        padding-left: 30px;
+      }
+
+      .lienhe p {
+        font-size: 16px;
+        margin: 10px 0;
+      }
+
+      .lienhe img {
+        height: 40px;
+        margin-top: 20px;
+      }
+      #div_lienhe {
+        padding-left: 20vw;
+        display: flex;
+      }
+      #div_img {
+        margin-top: 0px;
+        margin-right: 100px;
+      }
+      #div_img img {
+        width: 100px;
+        height: 100px;
+        border-radius: 50px;
+      }
+
+      #div_lh li,
+      h2 {
+        color: #333;
+      }
+      .tieude {
+        display: flex;
+        align-items: center;
+        padding: 10px 50px;
+        background-color: #89e2f8;
+      }
+
+      .logo {
+        height: 50px;
+        width: 50px;
+        border-radius: 25px;
+      } .dieuhuong a {
+        margin-left: 20px;
+        padding-left: 20px;
+        text-decoration: none;
+        color: #333;
+        font-size: 16px;
+      }
+
+      .ngonngu {
+        display: flex;
+        align-items: center;
+      }#dangnhap,
+      #dangky,
+      #dangxuat {
+        padding-top: 2px;
+        padding-left: 20px;
+        background-color: #fff;
+        margin-right: 20px;
+        margin-left: 20px;
+        width: 120px;
+        height: 30px;
+        border-radius: 20px;
+      }
+     
+      .ngonngu input {
+        border: none;
+        background-color: #fff;
+        margin-right: 20px;
+        width: 190px;
+        height: 30px;
+        border-radius: 20px;
+      }
+
+      .ngonngu a {
+        text-decoration: none;
+        color: #333;
+        font-size: 16px;
+        margin-right: 15px;
+      }
+
+      .ngonngu select {
+        border: 1px solid #ccc;
+        padding: 5px;
+        border-radius: 5px;
+        background: transparent;
+        font-size: 16px;
+      }
+
+  </style>
+</head>
+<body>
+  <header class="tieude">
+    <div>
+      <img
+        style="margin-left: 15px"
+        class="logo"
+        src="./z6565887036075_614e717af1372494d4e01f5b6a130d35.jpg"
+        alt="Logo"
+      /><br />
+      <p style="font-size: x-small">DaNangTravel12</p>
+    </div>
+    <nav class="dieuhuong">
+      <a href="#">Trang chủ</a>
+      <a href="#">Ẩm thực</a>
+      <a href="#">Điểm đến</a>
+      <a href="#">Dịch vụ</a>
+      <a href="#">Đặt phòng</a>
+      
+    </nav>
+    <div class="ngonngu">
+      <input type="text" placeholder="Tìm Kiếm" />
+      <div id="dangky"><a href="./dangky.html">Đăng ký</a></div>
+      <div id="dangnhap"><a href="./dangnhap.html">Đăng nhập</a></div>
+    </div>
+
+    <span class="user-icon" aria-label="Tài khoản người dùng" title="Tài khoản">👤</span>
+  </header>
+  <div class="account-panel" id="accountPanel">
+    <h3>Quản Lý Tài Khoản</h3>
+    <div class="form-box">
+      <input type="text" placeholder="Tên đăng nhập" id="username" required>
+      <input type="email" placeholder="Gmail" id="gmail" required>
+    </div>
+    <div class="form-box">
+      <h4>Lịch sử đặt</h4>
+      <input type="text" placeholder="Tour du lịch" id="tour">
+      <input type="text" placeholder="Đặt xe" id="car">
+      <h4>Đánh giá của bạn</h4>
+      <textarea placeholder="Hãy chia sẻ trải nghiệm của bạn..." id="review" required></textarea>
+        <button class="btn-submit" onclick="submitReview()">Gửi đánh giá</button>
+        <p class="success-msg" id="successMsg">🎉 Đã gửi đánh giá thành công!</p>
+    </div>
+  </div>
+  
+
+  <div class="hero">Các tour du lịch</div>
+
+  <div class="section">
+    <h3>📜 Tour Trong Ngày</h3>
+    <div class="tour-box">
+      <img src="https://th.bing.com/th/id/OIP.rcCD6rFQcyl6Q2ImHrkhowAAAA?rs=1&pid=ImgDetMain" alt="Bà Nà Hills">
+      <div class="tour-info">
+        <h4>Bà Nà Hills - Cầu Vàng</h4>
+        <p>Trải nghiệm cáp treo, tham quan Vườn Hoa, Hầm Rượu cổ, chùa Linh Ứng và khu vui chơi Fantasy Park.</p>
+        <p>Giá từ: 1.300.000 VNĐ </p>
+        <button class="book-btn" onclick="location.href='Đặt phong.html'">Đặt phòng</button>
+      </div>
+    </div>
+    <div class="tour-box">
+      <img src="https://danangsensetravel.com/view/at_suoi-khoang-nong-nui-than-tai-da-nang_b4f9a2497a18ca07f191812b80033cb3.jpg" alt="Suối Khoáng Nóng Núi Thần Tài">
+      <div class="tour-info">
+        <h4>Suối Khoáng Nóng Núi Thần Tài</h4>
+        <p>Thư giãn tại suối nước nóng, tắm bùn và trải nghiệm công viên nước.</p>
+        <p>Giá từ: 1.050.000 VNĐ </p>
+        <button class="book-btn" onclick="location.href='Đặt phong.html'">Đặt phòng</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h3>🚌 Tour 3 Ngày 2 Đêm</h3>
+    <div class="tour-box">
+      <img src="https://i.pinimg.com/originals/12/da/f5/12daf579c78eac96a31f6dc302950177.jpg" alt="Đà Nẵng - Hội An">
+      <div class="tour-info">
+        <h4>Đà Nẵng - Hội An - Bà Nà Hills</h4>
+        <p>Khám phá Bà Nà Hills, phố cổ Hội An và bãi biển Sơn Trà.</p>
+        <p>Giá từ: 2.798.000 VNĐ </p>
+        <button class="book-btn" onclick="location.href='Đặt phong.html'">Đặt phòng</button>
+      </div>
+    </div>
+    <div class="tour-box">
+      <img src="https://th.bing.com/th/id/R.006bc60b683f1599336dbd79bfb8b07b?rik=dw%2bN7YG7BySqnQ&pid=ImgRaw&r=0" alt="Cù Lao Chàm">
+      <div class="tour-info">
+        <h4>Đà Nẵng - Cù Lao Chàm - Hội An</h4>
+        <p>Tham quan đảo Cù Lao Chàm, lặn ngắm san hô và thưởng thức hải sản.</p>
+        <p>Giá từ: 3.090.000 VNĐ </p>
+        <button class="book-btn" onclick="location.href='Đặt phong.html'">Đặt phòng</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h3>⛰️ Tour 4 Ngày 3 Đêm</h3>
+    <div class="tour-box">
+      <img src="https://res.klook.com/images/fl_lossy.progressive,q_65/c_fill,w_1295,h_863,f_auto/w_80,x_15,y_15,g_south_west,l_klook_water/activities/zywx19josyknpx0mhrzy/V%C3%A9C%C3%B4ngVi%C3%AAnSu%E1%BB%91iN%C6%B0%E1%BB%9BcN%C3%B3ngN%C3%BAiTh%E1%BA%A7nT%C3%A0i%C4%90%C3%A0N%E1%BA%B5ng.jpg" alt="Sơn Trà - Bà Nà">
+      <div class="tour-info">
+        <h4>Đà Nẵng - Sơn Trà - Bà Nà Hills - Hội An - Núi Thần Tài</h4>
+        <p>Lịch trình kết hợp tham quan và nghỉ dưỡng tại các địa điểm nổi bật.</p>
+        <p>Giá từ: 3.799.000 VNĐ </p>
+        <button class="book-btn" onclick="location.href='Đặt phong.html'">Đặt phòng</button>
+      </div>
+    </div>
+    <div class="tour-box">
+      <img src="https://i2.ex-cdn.com/crystalbay.com/files/content/2024/08/13/du-lich-phong-nha-ke-bang-123-2134.jpg" alt="Phong Nha">
+      <div class="tour-info">
+        <h4>Đà Nẵng - Huế - Động Thiên Đường/Phong Nha</h4>
+        <p>Trải nghiệm di sản văn hóa và thiên nhiên miền Trung.</p>
+        <p>Giá từ: 4.090.000 VNĐ </p>
+        <button class="book-btn" onclick="location.href='Đặt phong.html'">Đặt phòng</button>
+      </div>
+    </div>
+  </div>
+     <!-- Trong tour.html -->
+
+
+     <footer>
+      <div class="footer-info">
+       <!-- Contact Section -->
+      <section class="lienhe">
+        <div id="div_lienhe">
+          <div id="div_img">
+            <img
+              src="./z6565887036075_614e717af1372494d4e01f5b6a130d35.jpg"
+              alt="Logo Footer"
+            />
+            <p style="color: #333">DaNangTravel12</p>
+          </div>
+          <div id="div_lh">
+            <h2>LIÊN HỆ</h2>
+            <ul>
+              <li>Địa chỉ: Số 128, đường Nguyễn Trãi, Đà Nẵng.</li>
+              <li>Hotline: 19001001910</li>
+              <li>SĐT: 0375.124.568</li>
+              <li>Email: DaNangTravel12@gmailgmail.com</li>
+              <li>Website: https://DaNangTravel12/</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+    </footer>
+    <script>
+    function toggleDropdown() {
+      const menu = document.getElementById("bookingDropdown");
+      menu.style.display = (menu.style.display === "block") ? "none" : "block";
+    }
+    
+    // Đóng dropdown nếu click ra ngoài
+    document.addEventListener("click", function(event) {
+      const dropdown = document.getElementById("bookingDropdown");
+      const trigger = dropdown.parentElement;
+      if (!trigger.contains(event.target)) {
+        dropdown.style.display = "none";
+      }
+    });
+    const userIcon = document.querySelector('.user-icon');
+  const accountPanel = document.getElementById('accountPanel');
+  
+  userIcon.addEventListener('click', () => {
+    accountPanel.style.display = accountPanel.style.display === 'block' ? 'none' : 'block';
+  });
+  function submitReview() {
+  const username = document.getElementById('username').value.trim();
+  const gmail = document.getElementById('gmail').value.trim();
+  const review = document.getElementById('review').value.trim();
+
+  if (username && gmail && review) {
+    successMsg.style.display = 'block';
+    successMsg.style.opacity = 0;
+    setTimeout(() => {
+      successMsg.style.opacity = 1;
+      successMsg.style.transition = 'opacity 0.5s ease-in';
+    }, 100);
+
+    document.querySelector('.btn-submit').disabled = true;
+    setTimeout(() => {
+      document.querySelector('.btn-submit').disabled = false;
+    }, 3000);
+  } else {
+    alert('Vui lòng điền đầy đủ Tên, Gmail và Đánh giá.');
+  }
+}
+function submitReview() {
+  const username = document.getElementById('username').value.trim();
+  const gmail = document.getElementById('gmail').value.trim();
+  const review = document.getElementById('review').value.trim();
+
+  if (username && gmail && review) {
+    successMsg.style.display = 'block';
+    successMsg.style.opacity = 0;
+    setTimeout(() => {
+      successMsg.style.opacity = 1;
+      successMsg.style.transition = 'opacity 0.5s ease-in';
+    }, 100);
+
+    document.querySelector('.btn-submit').disabled = true;
+    setTimeout(() => {
+      document.querySelector('.btn-submit').disabled = false;
+    }, 3000);
+  } else {
+    alert('Vui lòng điền đầy đủ Tên, Gmail và Đánh giá.');
+  }
+}
+
+    </script>
+    
+</body>
+</html>
